@@ -5,17 +5,20 @@ from dotenv import load_dotenv
 # Cargar las variables de entorno
 load_dotenv()
 
-# Configurar el cliente de OpenAI
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+# Configurar el cliente apuntando a la API de Groq
+client = OpenAI(
+    api_key=os.getenv("GROQ_API_KEY"),
+    base_url="https://api.groq.com/openai/v1"
+)
 
 def obtener_respuesta_ia(historial_mensajes):
     """
-    Interactúa con la API de OpenAI enviando el historial 
+    Interactúa con la API de Groq (compatible con OpenAI) enviando el historial 
     de la conversación y retornando la respuesta del modelo.
     """
     try:
         respuesta = client.chat.completions.create(
-            model="gpt-4o-mini",
+            model="llama-3.3-70b-versatile",
             messages=historial_mensajes,
             temperature=0.7
         )
